@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- 引入属性文件 -->
+	<!-- <context:property-placeholder location="classpath:props/config.properties" file-encoding="utf-8" /> -->
+
+	<!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.simpz.bitcoder">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:props/freemarker.properties" />
+	</bean>
+	
+	<bean id="freemarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"
+		autowire="byName">
+		<property name="templateLoaderPath" value="classpath:/page" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="freemarkerSettings" ref="freemarkerConfiguration" />
+	</bean>
+	
+    <bean id="configBean" class="com.simpz.bitcoder.utils.SystemPropertyConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:props/memcached.properties</value>
+				<value>classpath:props/config.properties</value>
+				<value>classpath:props/mongo.properties</value>
+			</list>
+		</property>
+	</bean> 
+	
+	<bean id="springContextHolder" class="com.simpz.bitcoder.utils.SpringContextHolder"/>
+	
+	<import resource="classpath:spring-mybatis.xml"/>
+	<!-- <import resource="classpath:spring-memcached.xml"/> -->
+	<import resource="classpath:spring-xmemcache.xml"/>
+	<import resource="classpath:spring-mongodb.xml"/>
+</beans>

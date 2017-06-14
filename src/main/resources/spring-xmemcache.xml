@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">  
+    <bean id="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder">  
+        <constructor-arg>  
+            <list>  
+                <bean class="java.net.InetSocketAddress">  
+                    <constructor-arg value="localhost"/>  
+                    <constructor-arg value="11211"/>  
+                </bean>  
+            </list>  
+        </constructor-arg>  
+        <property name="connectionPoolSize" value="5"/>  
+        <property name="failureMode" value="true"/>  
+        <property name="commandFactory">  
+            <bean class="net.rubyeye.xmemcached.command.TextCommandFactory"/>  
+        </property>  
+        <property name="sessionLocator">  
+            <bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator" />  
+        </property>  
+        <property name="transcoder">  
+            <bean class="net.rubyeye.xmemcached.transcoders.SerializingTranscoder" />  
+        </property>  
+<!--        <property name="socketOption">  
+            <map>  
+                <entry key="SO_RCVBUF" value="32768"/>  
+                <entry key="SO_SNDBUF" value="16384"/>  
+                <entry key="TCP_NODELAY" value="false"/>  
+            </map>  
+        </property>  
+        <property name="configuration">  
+            <bean class="com.google.code.yanf4j.config.Configuration" p:statisticsServer="false"/>  
+        </property>-->  
+    </bean>  
+    <bean id="memcachedClient"   
+          factory-bean="memcachedClientBuilder"  
+          factory-method="build"  
+          destroy-method="shutdown" />  
+<!--      p:enableHeartBeat="false"  
+          p:mergeFactor="150"  
+          p:optimizeGet="true"  
+          p:optimizeMergeBuffer="true"-->  
+</beans>  
