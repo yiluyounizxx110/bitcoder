@@ -1,4 +1,4 @@
-package bitcoder;
+package com.simpz.bitcoder;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

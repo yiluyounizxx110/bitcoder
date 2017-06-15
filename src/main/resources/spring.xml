@@ -36,6 +36,7 @@
 				<value>classpath:props/memcached.properties</value>
 				<value>classpath:props/config.properties</value>
 				<value>classpath:props/mongo.properties</value>
+				<value>classpath:props/redis.properties</value>
 			</list>
 		</property>
 	</bean> 
@@ -45,5 +46,6 @@
 	<import resource="classpath:spring-mybatis.xml"/>
 	<!-- <import resource="classpath:spring-memcached.xml"/> -->
 	<import resource="classpath:spring-xmemcache.xml"/>
+	<import resource="classpath:spring-redis.xml"/>
 	<import resource="classpath:spring-mongodb.xml"/>
 </beans>
