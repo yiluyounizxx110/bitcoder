@@ -2,7 +2,6 @@ package com.simpz.bitcoder.utils;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.simpz.bitcoder.BaseTest;
 import com.simpz.bitcoder.utils.cache.JedisTemplate;
